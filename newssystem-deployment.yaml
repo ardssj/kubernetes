@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sys-news-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: sys-news
+      labels:
+        app: sys-news
+    spec:
+      containers:
+        - name: sys-news-container
+          image: aluracursos/sistema-noticias:1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: newssystem-configmap
+  selector:
+    matchLabels:
+      app: sys-news

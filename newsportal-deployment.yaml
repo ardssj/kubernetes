@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: newsportal-deployment
+spec:
+  template:
+    metadata:
+      name: news
+      labels:
+        app: news
+    spec:
+      containers:
+        - name: news-container
+          image: aluracursos/portal-noticias:1
+          ports: 
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: newsportal-configmap
+  replicas: 3
+  selector:
+    matchLabels:
+      app: news
